@@ -1,6 +1,9 @@
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 <div class="container">
-    <h2><strong>John Doe</strong></h2>
+    <h2>
+        <strong>John Doe</strong>
+        @Html.ActionLink("Log Out", "LogOut", "Account", new { }, new{@class="btn btn-danger"})
+    </h2>
     <h2>Problems</h2>
     <p>
         DIABETES MELLITUS (ICD-250.)<br>

@@ -4,8 +4,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication("CookieAuth")
     .AddCookie("CookieAuth", config =>
     {
-        config.Cookie.Name = "Doctors.Cookie";
-        config.LoginPath = "/PatientHealth/Login";
+        config.Cookie.Name = "Clinic.Cookie";
+        config.LoginPath = "/Account/Login";
     });
 
 var app = builder.Build();
@@ -21,6 +21,8 @@ else if (app.Environment.IsProduction())
     app.UseHttpsRedirection();
 }
 app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/heartbeat", () => $"Claim-based authorization project working : {DateTime.Now.ToLongDateString()}");
