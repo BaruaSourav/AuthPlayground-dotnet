@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<div class="container">
+    <h2><strong>John Doe</strong></h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Log Out", "LogOut", "Account", new { }, new{@class="btn btn-danger"})
+    }
+    <table class="table" summary="layout" width="80%" cellspacing="0" cellpadding="8" border="0">
+        <tbody>
+            <tr valign="top">
+                <td width="33%">Home: 444-444-4444<br>
+                    Male &nbsp;DOB: 04/04/1950</td>
+                <td width="33%" valign="bottom">0000-44444</td>
+                <td width="34%" valign="bottom">Ins: Commercial xxxxx</td>
+            </tr>
+        </tbody>
+    </table>
+    @Html.ActionLink("See Health Info", "HealthInfo", "Patient", new { }, new{@class="btn btn-info"})
+</div>
