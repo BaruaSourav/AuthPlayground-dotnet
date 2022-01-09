@@ -13,6 +13,11 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.Cookie.Name = "Clinic.Cookie";
+    config.LoginPath = "/Account/Login";
+});
 //Configure
 builder.Services.Configure<IdentityOptions>(options =>
 {

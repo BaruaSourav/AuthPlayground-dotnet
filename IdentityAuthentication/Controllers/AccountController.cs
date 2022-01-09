@@ -53,7 +53,7 @@ namespace IdentityAuthentication.Controllers
                 var loginResult = await _signInManager.PasswordSignInAsync(user, password, false, false);
                 if (loginResult.Succeeded)
                 {
-                    return RedirectToAction("HealthInfo", new { Controller = "Patient" });
+                    return RedirectToAction("Index", new { Controller = "Patient" });
                 }
             }
             return View();
