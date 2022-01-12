@@ -1,6 +1,8 @@
 using IdentityAuthentication.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,12 @@ builder.Services.ConfigureApplicationCookie(config =>
     config.Cookie.Name = "Clinic.Cookie";
     config.LoginPath = "/Account/Login";
 });
+//Mailkit configuration
+var mailKitOpt = builder.Configuration.GetSection("Email").Get<MailKitOptions>();
+builder.Services.AddMailKit(config => {
+    config.UseMailKit(mailKitOpt);
+});
+
 //Configure
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -28,6 +36,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
+
+    options.SignIn.RequireConfirmedAccount = true;
 
     // Lockout settings.
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
