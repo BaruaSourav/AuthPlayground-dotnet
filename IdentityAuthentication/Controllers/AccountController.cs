@@ -44,8 +44,8 @@ namespace IdentityAuthentication.Controllers
             if (result.Succeeded)
             {
                 var emailConfToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var urlToConfirm = Url.Action("ConfirmEmail","Account", new {userId = user.Id, token=HttpUtility.UrlEncode(emailConfToken)},Request.Scheme, Request.Host.ToString());
-                await _emailService.SendAsync(user.Email,"Verification Email", $"<html><a href=\"{urlToConfirm}\">Confirm here</a></html>");
+                var urlToConfirm = Url.Action("ConfirmEmail","Account", new {userId = user.Id, token=emailConfToken},Request.Scheme, Request.Host.ToString());
+                await _emailService.SendAsync(user.Email,"Verification Email", $"<html><a href={urlToConfirm}>Confirm here</a></html>");
                 return RedirectToAction("EmailVerification");
             }
             return View();
@@ -59,7 +59,8 @@ namespace IdentityAuthentication.Controllers
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null) return BadRequest();
-            var confirmEmailResult  = await _userManager.ConfirmEmailAsync(user, HttpUtility.UrlDecode(token));
+            var decodedToken = HttpUtility.UrlDecode(token);
+            var confirmEmailResult  = await _userManager.ConfirmEmailAsync(user, decodedToken);
             if (confirmEmailResult.Succeeded)
             {
                 return View();
