@@ -59,8 +59,8 @@ namespace IdentityAuthentication.Controllers
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null) return BadRequest();
-            var decodedToken = HttpUtility.UrlDecode(token);
-            var confirmEmailResult  = await _userManager.ConfirmEmailAsync(user, decodedToken);
+            //var decodedToken = HttpUtility.UrlDecode(token);
+            var confirmEmailResult  = await _userManager.ConfirmEmailAsync(user, token);
             if (confirmEmailResult.Succeeded)
             {
                 return View();

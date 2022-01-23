@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using IdentityAuthentication.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NETCore.MailKit.Extensions;
@@ -19,6 +21,15 @@ builder.Services.ConfigureApplicationCookie(config =>
 {
     config.Cookie.Name = "Clinic.Cookie";
     config.LoginPath = "/Account/Login";
+});
+
+builder.Services.AddAuthorization(config =>
+{
+    var authBuilder = new AuthorizationPolicyBuilder();
+    config.DefaultPolicy = authBuilder
+    .RequireAuthenticatedUser()
+    .RequireClaim(ClaimTypes.DateOfBirth)
+    .Build();
 });
 //Mailkit configuration
 var mailKitOpt = builder.Configuration.GetSection("Email").Get<MailKitOptions>();
